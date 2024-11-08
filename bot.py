@@ -84,10 +84,10 @@ async def check_activity():
 
     NonLoaNames = CheckLoa()
 
-    OverNineDays = []
-    NineDays = []
-    EightDays = []
-    SevenDays = []
+    OverFiveDays = []
+    FiveDays = []
+    FourDays = []
+    ThreeDays = []
 
     for name, DiscordId, lastSeen in zip(NameColumn, DiscordIDColumn, LastSeenColumn):
         if name != "" and name != "Name" and name != "dont delete":
@@ -99,28 +99,28 @@ async def check_activity():
                     LastSeen = datetime.strptime(lastSeen, "%d/%m/%Y")
                     DaysSince = (CurrentDate - LastSeen).days
 
-                    if DaysSince > 9:
-                        OverNineDays.append(f"<@{DiscordId}>")
-                    elif DaysSince == 9:
-                        NineDays.append(f"<@{DiscordId}>")
-                    elif DaysSince == 8:
-                        EightDays.append(f"<@{DiscordId}>")
-                    elif DaysSince == 7:
-                        SevenDays.append(f"<@{DiscordId}>")
+                    if DaysSince > 5:
+                        OverFiveDays.append(f"<@{DiscordId}>")
+                    elif DaysSince == 5:
+                        FiveDays.append(f"<@{DiscordId}>")
+                    elif DaysSince == 4:
+                        FourDays.append(f"<@{DiscordId}>")
+                    elif DaysSince == 3:
+                        ThreeDays.append(f"<@{DiscordId}>")
 
                 except Exception as e:
                     logging.error(f"Unable to convert DaysSince value for {name}: {e}")
 
     output = []
 
-    if SevenDays:
-        output.append(f"2 days: {' '.join(SevenDays)}")
-    if EightDays:
-        output.append(f"1 day: {' '.join(EightDays)}")
-    if NineDays:
-        output.append(f"0 days: {' '.join(SevenDays)}")
-    if OverNineDays:
-        output.append(f"Inactive: {' '.join(OverNineDays)}")
+    if ThreeDays:
+        output.append(f"2 days: {' '.join(ThreeDays)}")
+    if FourDays:
+        output.append(f"1 day: {' '.join(FourDays)}")
+    if FiveDays:
+        output.append(f"0 days: {' '.join(FiveDays)}")
+    if OverFiveDays:
+        output.append(f"Inactive: {' '.join(OverFiveDays)}")
 
     if output:
         response = "\n".join(output)
